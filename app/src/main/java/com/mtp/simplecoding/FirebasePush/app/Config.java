@@ -1,10 +1,5 @@
 package com.mtp.simplecoding.FirebasePush.app;
 
-/**
- * Created by Ravi Tamada on 28/09/16.
- * www.androidhive.info
- */
-
 public class Config {
 
     // global topic to receive app wide push notifications
