@@ -26,10 +26,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.e(TAG, "From: " + remoteMessage.getFrom());
+        Log.e(TAG, "From MESSAGE: " + remoteMessage.getFrom());
 
-        if (remoteMessage == null)
+        if (remoteMessage == null){
             return;
+        }
+
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
@@ -97,6 +99,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             if (!NotificationUtils.isAppIsInBackground(getApplicationContext())) {
                 // app is in foreground, broadcast the push message
+
                 Intent pushNotification = new Intent(Config.PUSH_NOTIFICATION);
                 pushNotification.putExtra("message", message);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
