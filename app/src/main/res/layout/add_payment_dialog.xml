@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:id="@+id/ev_add_description"
+                android:hint="Enter description"
+                android:textColor="@color/text_label"
+                android:layout_height="50dp" />
+
+            <EditText
+
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:hint="Enter Amount"
+                android:id="@+id/ev_add_amount"
+                android:inputType="number"
+                android:textColor="@color/text_label"
+                android:layout_height="50dp" />
+
+            <EditText
+
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:hint="Enter From Date"
+                android:id="@+id/ev_add_from_date"
+
+                android:textColor="@color/text_label"
+                android:layout_height="50dp" />
+            <EditText
+
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:hint="Enter To Date"
+                android:id="@+id/ev_add_to_date"
+
+                android:textColor="@color/text_label"
+                android:layout_height="50dp" />
+
+            <EditText
+
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:hint="Name Of Owner"
+                android:id="@+id/ev_add_name_of_owner"
+
+                android:textColor="@color/text_label"
+                android:layout_height="50dp" />
+
+            <EditText
+
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:hint="Status"
+                android:id="@+id/ev_add_status"
+
+                android:textColor="@color/text_label"
+                android:layout_height="50dp" />
+            <Button
+                android:layout_width="match_parent"
+                android:id="@+id/btn_submit"
+                android:text="Submit"
+                android:layout_height="50dp" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+

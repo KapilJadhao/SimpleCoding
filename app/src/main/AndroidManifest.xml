@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FirebaseDataBase.FireBaseDataActivity"></activity>
+        <activity android:name=".FirebaseDataBase.PaymentListActivity"></activity>
+        <activity android:name=".FireBaseOtpVerification.VerifyOtpActivity" />
+        <activity android:name=".FirebaseDataBase.FireBaseDataActivity" />
 
         <uses-library
             android:name="org.apache.http.legacy"

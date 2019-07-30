@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.mtp.simplecoding.FirebaseDataBase.FireBaseDataActivity;
+import com.mtp.simplecoding.FirebaseDataBase.PaymentListActivity;
 import com.mtp.simplecoding.FirebasePush.app.Config;
 import com.mtp.simplecoding.RetrofitExample.Api;
 import com.mtp.simplecoding.RetrofitExample.Hero;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                        System.out.println("Product Name:"+heroList.getProductDealTransactionDetails().get(i).getProductSku());
                    }
 
-                    Intent intent=new Intent(getApplicationContext(), FireBaseDataActivity.class);
+                    Intent intent=new Intent(getApplicationContext(), PaymentListActivity.class);
                     startActivity(intent);
                    // System.out.println("onResponce"+heroList.size());
                 }
