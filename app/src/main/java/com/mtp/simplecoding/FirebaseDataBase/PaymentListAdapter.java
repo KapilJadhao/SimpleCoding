@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mtp.simplecoding.R;
@@ -45,14 +46,15 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
         final MessageViewHolder messageViewHolder = (MessageViewHolder) holder;
 
         messageViewHolder.tv_owner_name.setText(model.getNameOfOwner());
-
-
-        messageViewHolder.tv_owner_name.setOnClickListener(new View.OnClickListener() {
+        messageViewHolder.tv_description.setText(model.getDescription());
+        messageViewHolder.tv_duration.setText(model.getFromDate()+" to "+model.getToDate());
+        messageViewHolder.tv_status.setText(model.getStatus());
+        messageViewHolder.tv_amount.setText(model.getAmount());
+        messageViewHolder.iv_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (mListener != null) {
-                    mListener.onItemClick(model);
+                    mListener.onItemClick(model,position);
                 }
             }
         });
@@ -66,7 +68,8 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
     public class MessageViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView tv_owner_name;
+        TextView tv_owner_name,tv_description,tv_duration,tv_status,tv_amount;
+        ImageView iv_remove;
 
 
 
@@ -74,6 +77,12 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
             super(view);
 
             tv_owner_name=  view.findViewById(R.id.tv_owner_name);
+
+            tv_description=  view.findViewById(R.id.tv_description);
+            tv_duration=  view.findViewById(R.id.tv_duration);
+            tv_status=  view.findViewById(R.id.tv_status);
+            tv_amount=view.findViewById(R.id.tv_amount);
+            iv_remove=view.findViewById(R.id.iv_remove);
 
 
         }
@@ -86,7 +95,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
     }
 
     public interface ItemListener {
-        void onItemClick(paymentPojo item);
+        void onItemClick(paymentPojo item, int position);
     }
 
     // Filter Class
@@ -107,5 +116,11 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
 
         }
         notifyDataSetChanged();
+    }
+
+    public void removeAt(int position) {
+        /*mDataset.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mDataSet.size());*/
     }
 }

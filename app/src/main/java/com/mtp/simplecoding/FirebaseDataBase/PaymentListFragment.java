@@ -1,11 +1,19 @@
 package com.mtp.simplecoding.FirebaseDataBase;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +30,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.mtp.simplecoding.R;
+import com.mtp.simplecoding.Utility;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static com.mtp.simplecoding.RefranceName.paymetRef;
+import static com.mtp.simplecoding.Utility.chknull;
+import static com.mtp.simplecoding.Utility.mobileNUmber;
+import static com.mtp.simplecoding.Utility.paymentData;
+
 
 public class PaymentListFragment extends Fragment implements PaymentListAdapter.ItemListener {
     RecyclerView rv_paymenyList;
@@ -75,9 +94,14 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
                 showAddPaymentDialog();
             }
         });
-
         firebaseData();
-        paymentData();
+
+
+
+        //check data availability
+        getKeydataValue(paymetRef,mobileNUmber);
+
+       // paymentData();
         return rootView;
     }
 
@@ -85,7 +109,7 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
         mFirebaseInstance = FirebaseDatabase.getInstance();
 
         // get reference to 'users' node
-        mFirebaseDatabase = mFirebaseInstance.getReference("paymentList");
+        mFirebaseDatabase = mFirebaseInstance.getReference(paymetRef);
 
         // store app title to 'app_title' node
         mFirebaseInstance.getReference("app_title").setValue("Realtime Database");
@@ -146,66 +170,38 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
     }
 
     @Override
-    public void onItemClick(paymentPojo item) {
+    public void onItemClick(final paymentPojo item, int i) {
+        Log.e(TAG, "Position "+i+" Click On:"+paymentPojosList.get(i).getDescription());
 
-    }
-
-    public void addRecord(paymentPojo paumentList){
-        paymentPojosList.add(paumentList);
-        paymentListAdapter.notifyDataSetChanged();
-
-    }
-
-    public  void  checkData(paymentPojo paumentList){
-        ArrayList<paymentPojo> sendData=new ArrayList<>();
-        sendData=paymentPojosList;
-        sendData.add(paumentList);
-        Log.e("parameter:", "" + new Gson().toJson(sendData));
-        PaymentRequest paymentRequest=new PaymentRequest("7030537378",new Gson().toJson(sendData));
-
-        if (TextUtils.isEmpty(userId)) {
-            userId = mFirebaseDatabase.push().getKey();
-        }
-
-        mFirebaseDatabase.child(userId).setValue(paymentRequest);
-        addUserChangeListener();
-
-
-        addRecord(paumentList);
-    }
-
-
-    /**
-     * User data change listener
-     */
-    private void addUserChangeListener() {
-        // User data change listener
-        mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+        builder.setCancelable(false);
+        builder.setTitle("Are you sure you want to remove data");
+        builder.setMessage(" !");
+        final SpannableStringBuilder update=new SpannableStringBuilder("YES");
+        final SpannableStringBuilder skip=new SpannableStringBuilder("NO");
+        final StyleSpan bss=new StyleSpan(Typeface.BOLD);
+        final StyleSpan iss=new StyleSpan(Typeface.ITALIC);
+        update.setSpan(bss,0,3, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        skip.setSpan(bss,0,2, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        builder.setPositiveButton(update, new DialogInterface.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                PaymentRequest user = dataSnapshot.getValue(PaymentRequest.class);
-
-                // Check for null
-                if (user == null) {
-                    Log.e(TAG, "User data is null!");
-                    return;
-                }
-
-                Log.e(TAG, "User data is changed!" + user.mobileNumber + ", " + user.paymentPojo);
-
-
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.e(TAG, "Failed to read user", error.toException());
+            public void onClick(DialogInterface dialog, int which) {
+                AddData(item,"REMOVE",0);
             }
         });
-    }
 
+        builder.setNegativeButton(skip, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog alertDialog= builder.create();
+        alertDialog.show();
+
+
+    }
 
 
 
@@ -239,7 +235,9 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
                             ,ev_add_status.getText().toString()
                             ,ev_add_name_of_owner.getText().toString()
                             ,ev_add_description.getText().toString());
-                    checkData(paumentList);
+
+
+                    AddData(paumentList,"ADD",0);
 
                     dialog2.dismiss();
 
@@ -256,6 +254,97 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
         // TODO
         // In real apps this userId should be fetched
         // by implementing firebase auth
+
+    }
+
+
+    //create new data
+    public  void  AddData(paymentPojo paumentList,String process,int i){
+        ArrayList<paymentPojo> sendData=new ArrayList<>();
+        sendData=paymentPojosList;
+        if(process.equalsIgnoreCase("ADD")){
+            sendData.add(paumentList);
+        }else if(process.equalsIgnoreCase("REMOVE")){
+            sendData.remove(paumentList);
+        }
+
+        Log.e("parameter:", "" + new Gson().toJson(sendData));
+        PaymentRequest paymentRequest=new PaymentRequest(mobileNUmber,new Gson().toJson(sendData));
+
+        if (TextUtils.isEmpty(userId)) {
+            userId = mFirebaseDatabase.push().getKey();
+        }
+
+        mFirebaseDatabase.child(userId).setValue(paymentRequest);
+
+        //check data availability
+        getKeydataValue(paymetRef,mobileNUmber);
+
+    }
+
+
+    //update data of user
+    private void updateUser(paymentPojo paumentList) {
+        // updating the user via child nodes
+        ArrayList<paymentPojo> sendData=new ArrayList<>();
+        sendData=paymentPojosList;
+        sendData.add(paumentList);
+        mFirebaseDatabase.child(userId).child("paymentPojo").setValue(new Gson().toJson(sendData));
+        mFirebaseDatabase.child(userId).child("mobileNumber").setValue(mobileNUmber);
+
+        //check data availability
+        getKeydataValue(paymetRef,mobileNUmber);
+
+    }
+
+    //check and set data of user
+    public void getKeydataValue(String refrance,String mobileNumber){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(refrance);
+        reference.orderByChild("mobileNumber").equalTo(mobileNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                paymentData=true;
+                for(DataSnapshot datas: dataSnapshot.getChildren()){
+                    paymentPojosList.clear();
+                    Log.e(TAG, "User Registration key"+datas);
+                    userId=datas.getKey().toString();
+                    Log.e(TAG, "User key"+userId);
+                    PaymentRequest user = datas.getValue(PaymentRequest.class);
+                    // Check for null
+                    if (user == null) {
+                        Log.e(TAG, "User data is null!");
+                        return;
+                    }
+
+                    Log.e(TAG, "User data is changed!" + user.mobileNumber + ", " + user.paymentPojo);
+
+                    try {
+                        JSONArray paymentPojoArray = new JSONArray(user.paymentPojo);
+                        for (int i=0;i<paymentPojoArray.length();i++){
+                            JSONObject  jsonObject1 = paymentPojoArray.getJSONObject(i);
+                            paymentPojosList.add(new Gson().fromJson(jsonObject1.toString(), paymentPojo.class));
+                        }
+
+                        setRecylerView();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                 Log.e(TAG, "User cancel");
+               // System.out.println("User cancel");
+            }
+        });
+
+
 
     }
 }

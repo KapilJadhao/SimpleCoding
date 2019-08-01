@@ -34,6 +34,7 @@
                 android:padding="5dp"
                 android:hint="Enter From Date"
                 android:id="@+id/ev_add_from_date"
+                android:inputType="date"
 
                 android:textColor="@color/text_label"
                 android:layout_height="50dp" />
@@ -43,6 +44,7 @@
                 android:padding="5dp"
                 android:hint="Enter To Date"
                 android:id="@+id/ev_add_to_date"
+                android:inputType="date"
 
                 android:textColor="@color/text_label"
                 android:layout_height="50dp" />

@@ -6,4 +6,8 @@
     <color name="white">#ffffff</color>
     <color name="dark_gray_bar">#434343</color>
     <color name="text_label">#434343</color>
+
+    <color name="normal_text_color">#434343</color>
+    <color name="lebel_text_color">#434343</color>
+    <color name="theme_color">#434343</color>
 </resources>
