@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     >
 
+
+
         <LinearLayout
-            android:orientation="vertical"
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <EditText
 
@@ -28,26 +31,30 @@
                 android:textColor="@color/text_label"
                 android:layout_height="50dp" />
 
-            <EditText
+            <TextView
 
                 android:layout_width="match_parent"
                 android:padding="5dp"
-                android:hint="Enter From Date"
+                android:hint="Select From Date"
+                android:visibility="gone"
+
+
                 android:id="@+id/ev_add_from_date"
                 android:inputType="date"
 
                 android:textColor="@color/text_label"
                 android:layout_height="50dp" />
-            <EditText
+            <TextView
 
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:padding="5dp"
-                android:hint="Enter To Date"
+                android:layout_margin="5dp"
+                android:hint="Select To Date"
                 android:id="@+id/ev_add_to_date"
                 android:inputType="date"
 
                 android:textColor="@color/text_label"
-                android:layout_height="50dp" />
+                android:layout_height="wrap_content" />
 
             <EditText
 
@@ -59,15 +66,26 @@
                 android:textColor="@color/text_label"
                 android:layout_height="50dp" />
 
-            <EditText
-
+            <RelativeLayout
+                android:layout_below="@+id/tv_status"
                 android:layout_width="match_parent"
-                android:padding="5dp"
-                android:hint="Status"
-                android:id="@+id/ev_add_status"
+                android:layout_marginTop="10dp"
 
-                android:textColor="@color/text_label"
-                android:layout_height="50dp" />
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:id="@+id/sp_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"></Spinner>
+
+                <TextView
+
+                    android:id="@+id/sp_text_status"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+
             <Button
                 android:layout_width="match_parent"
                 android:id="@+id/btn_submit"
@@ -75,7 +93,7 @@
                 android:layout_height="50dp" />
         </LinearLayout>
 
-    </ScrollView>
+    </RelativeLayout>
 
 
 

@@ -1,8 +1,12 @@
 package com.mtp.simplecoding.FirebaseDataBase;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,9 +23,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,16 +40,22 @@ import com.google.gson.Gson;
 import com.mtp.simplecoding.R;
 import com.mtp.simplecoding.Utility;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import static com.mtp.simplecoding.RefranceName.paymetRef;
 import static com.mtp.simplecoding.Utility.chknull;
+import static com.mtp.simplecoding.Utility.getCurrentDate;
 import static com.mtp.simplecoding.Utility.mobileNUmber;
 import static com.mtp.simplecoding.Utility.paymentData;
+import static com.mtp.simplecoding.Utility.spinnerStatus;
 
 
 public class PaymentListFragment extends Fragment implements PaymentListAdapter.ItemListener {
@@ -211,15 +225,48 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
             final Dialog dialog2 = new Dialog(getContext());
             dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog2.setContentView(R.layout.add_payment_dialog);
-            dialog2.setCancelable(false);
+            dialog2.setCancelable(true);
             dialog2.setCanceledOnTouchOutside(false);
+            final Calendar myCalendar = Calendar.getInstance();
 
             final EditText ev_add_description = (EditText) dialog2.findViewById(R.id.ev_add_description);
             final EditText ev_add_amount = (EditText) dialog2.findViewById(R.id.ev_add_amount);
-            final EditText ev_add_from_date = (EditText) dialog2.findViewById(R.id.ev_add_from_date);
-            final EditText ev_add_to_date = (EditText) dialog2.findViewById(R.id.ev_add_to_date);
+            final TextView ev_add_from_date = (TextView) dialog2.findViewById(R.id.ev_add_from_date);
+            final TextView ev_add_to_date = (TextView) dialog2.findViewById(R.id.ev_add_to_date);
             final EditText ev_add_name_of_owner = (EditText) dialog2.findViewById(R.id.ev_add_name_of_owner);
-            final EditText ev_add_status = (EditText) dialog2.findViewById(R.id.ev_add_status);
+
+            String [] Status={"Please Select Option","Paid","Pending"};
+            Spinner sp_status=dialog2.findViewById(R.id.sp_status);
+            final TextView sp_text_status=dialog2.findViewById(R.id.sp_text_status);
+            spinnerStatus(Status,sp_status,sp_text_status,getContext());
+            ev_add_from_date.setText(getCurrentDate());
+            final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                      int dayOfMonth) {
+                    // TODO Auto-generated method stub
+                    myCalendar.set(Calendar.YEAR, year);
+                    myCalendar.set(Calendar.MONTH, monthOfYear);
+                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    updateLabel(ev_add_to_date,myCalendar);
+                }
+
+            };
+
+
+
+
+            ev_add_to_date.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    new DatePickerDialog(getActivity(), date, myCalendar
+                            .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                            myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                }
+            });
+
 
             Button btn_submit = (Button) dialog2.findViewById(R.id.btn_submit);
             btn_submit.setText("SUBMIT");
@@ -232,7 +279,7 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
                             ,ev_add_from_date.getText().toString()
                             ,ev_add_to_date.getText().toString()
                             ,"false"
-                            ,ev_add_status.getText().toString()
+                            ,sp_text_status.getText().toString()
                             ,ev_add_name_of_owner.getText().toString()
                             ,ev_add_description.getText().toString());
 
@@ -248,6 +295,12 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
         } catch (Throwable e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateLabel(TextView editText,Calendar myCalendar) {
+        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        editText.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void createUser(String name, String email,String mobile) {
@@ -299,10 +352,16 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
 
     //check and set data of user
     public void getKeydataValue(String refrance,String mobileNumber){
+
+        final ProgressDialog progressDialog = Utility.getCustomProgressDialog1(getActivity());
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference(refrance);
         reference.orderByChild("mobileNumber").equalTo(mobileNumber).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+                }
 
                 paymentData=true;
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
@@ -340,6 +399,9 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
             @Override
             public void onCancelled(DatabaseError databaseError) {
                  Log.e(TAG, "User cancel");
+                if (progressDialog != null) {
+                    progressDialog.dismiss();
+                }
                // System.out.println("User cancel");
             }
         });
@@ -347,4 +409,7 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
 
 
     }
+
+
+
 }

@@ -3,6 +3,7 @@ package com.mtp.simplecoding;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.net.TrafficStats;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (Utility.isConnectedToInternet(MainActivity.this)){
+            Utility.mStartRX = TrafficStats.getTotalRxBytes();
+            Utility.mStartTX = TrafficStats.getTotalTxBytes();
+            Utility.mLastTime = System.currentTimeMillis();
+        }
 
 
         //Creating a retrofit object

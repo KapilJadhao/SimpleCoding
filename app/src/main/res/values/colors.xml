@@ -10,4 +10,43 @@
     <color name="normal_text_color">#434343</color>
     <color name="lebel_text_color">#434343</color>
     <color name="theme_color">#434343</color>
+    <color name="text_color_rgb_100_57_3">#5b3000</color>
+    <color name="home_heder">#f7f7f7</color>
+
+    <color name="text_color_rgb_91_48_0">#5b3000</color>
+    <color name="text_color_rgb_92_50_2">#5c3202</color>
+    <color name="text_color_rgb_112_112_112">#707070</color>
+    <color name="text_color_rgb_255_148_41">#ff9429</color>
+
+    <color name="text">#643903</color>
+
+    <color name="status_bar">#e0e0e0</color>
+    <color name="discount">#FF80A90A</color>
+    <color name="discount_2">#FF4A90E2</color>
+    <color name="shop_by_category_card">#8d000000</color>
+
+    <color name="yellow">#ffd500</color>
+    <color name="Orange">#FFFF7F00</color>
+    <color name="green">#417505</color>
+    <color name="whitetabs">#74ffffff</color>
+
+    <color name="speciality_store_card_back">#77e0e0e0</color>
+
+    <!-- <color name="button">#f49434</color>-->
+    <color name="button">#FA9135</color>
+
+    <color name="cross_button">#9E0202</color>
+    <color name="red">#9fa60d0d</color>
+    <!--
+        <color name="btn_notify">#80a90a</color>
+    -->
+    <color name="btn_notify">#7AA221</color>
+
+
+    <color name="indicatorcolor">#FF9429</color>
+
+    <color name="cityselected">#e47c13</color>
+    <color name="btn_text">#ffffff</color>
+    <color name="ordercon">#fa8814</color>
+    <color name="edittext_notify">#979797</color>
 </resources>
