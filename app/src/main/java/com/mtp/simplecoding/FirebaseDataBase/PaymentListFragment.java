@@ -235,10 +235,16 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
             final TextView ev_add_to_date = (TextView) dialog2.findViewById(R.id.ev_add_to_date);
             final EditText ev_add_name_of_owner = (EditText) dialog2.findViewById(R.id.ev_add_name_of_owner);
 
-            String [] Status={"Please Select Option","Paid","Pending"};
+            String [] Status={"Please Select Status","Paid","Pending"};
+            String [] ExpenceType={"Please Select Expense Type","Room","Shopping","Vehicle","Other"};
             Spinner sp_status=dialog2.findViewById(R.id.sp_status);
             final TextView sp_text_status=dialog2.findViewById(R.id.sp_text_status);
             spinnerStatus(Status,sp_status,sp_text_status,getContext());
+
+            Spinner sp_expense_type=dialog2.findViewById(R.id.sp_expense_type);
+            final TextView sp_text_expense_type=dialog2.findViewById(R.id.sp_text_expense_type);
+            spinnerStatus(ExpenceType,sp_expense_type,sp_text_expense_type,getContext());
+
             ev_add_from_date.setText(getCurrentDate());
             final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 

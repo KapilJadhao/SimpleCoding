@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FirebaseDataBase.PaymentListActivity"></activity>
+        <activity android:name=".kotlin.Activity.DashBoaedView"></activity>
+        <activity android:name=".kotlin.Activity.PaymentActvity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".FirebaseDataBase.PaymentListActivity" />
         <activity android:name=".FireBaseOtpVerification.VerifyOtpActivity" />
         <activity android:name=".FirebaseDataBase.FireBaseDataActivity" />
 
@@ -32,7 +35,7 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service> <!-- ./Firebase Notifications -->
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
