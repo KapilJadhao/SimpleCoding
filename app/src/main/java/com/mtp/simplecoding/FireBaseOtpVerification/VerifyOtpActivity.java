@@ -2,26 +2,11 @@ package com.mtp.simplecoding.FireBaseOtpVerification;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.mtp.simplecoding.R;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
@@ -31,11 +16,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -51,19 +33,16 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.mtp.simplecoding.SharePrefUtil;
+
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
-
 import static com.mtp.simplecoding.Utility.isConnectedToInternet;
-
-
 public class VerifyOtpActivity extends AppCompatActivity implements TextWatcher {
-
 
     private static final String TAG = VerifyOtpActivity.class.getSimpleName();
     RelativeLayout rl_number,rl_otp;
-    Timer T;
-    String a;
+
     EditText MobileNumber, OTPEditview;
     Button Submit, OTPButton;
     String result, mobnumb;
@@ -82,7 +61,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements TextWatcher 
     private String otpnm;
     RelativeLayout rl_name_email;
     EditText et_name_121,et_email_121;
-    String activity="";
+
     LinearLayout linearLayoutProgressBar;
     Button back_btn_otp;
     private static final String PREF_UNIQUE_ID="PREF_UNIQUE_ID";
@@ -90,24 +69,6 @@ public class VerifyOtpActivity extends AppCompatActivity implements TextWatcher 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_otp);
-
-        Bundle extras=getIntent().getExtras();
-        if(extras!=null){
-            activity=extras.getString("activity");
-
-        }
-        Window window = VerifyOtpActivity.this.getWindow();
-
-// clear FLAG_TRANSLUCENT_STATUS flag:
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-// finally change the color
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.setStatusBarColor(ContextCompat.getColor(VerifyOtpActivity.this,R.color.status_bar));
-        }
 
         TextView toolbat_title=findViewById(R.id.toolbar_title);
 
@@ -123,15 +84,9 @@ public class VerifyOtpActivity extends AppCompatActivity implements TextWatcher 
         SpannableString content1 =new SpannableString("Resend OTP");
         content1.setSpan(new UnderlineSpan(),0,content1.length(),0);
         tv_resend.setText(content1);
-
-
         rl_name_email=findViewById(R.id.rl_name_email);
         et_name_121=findViewById(R.id.et_name_121);
         et_email_121=findViewById(R.id.et_email_121);
-
-
-
-
 
         rl_number=findViewById(R.id.rl_number);
         rl_otp=findViewById(R.id.rl_otp);
@@ -318,20 +273,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements TextWatcher 
             }
         });
 
-        /*receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equalsIgnoreCase("jars")) {
-                    final String message = intent.getStringExtra("message");
-                    //Do whatever you want with the code here
 
-                    System.out.println("..,.,.,,,,,....,,,,,......,."+message);
-                    OTPEditview.setText(message);
-
-                }
-
-            }
-        };*/
     }
 
 
@@ -363,7 +305,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements TextWatcher 
                             //  db.doLogin(MobileNumber.getText().toString());
                             /*Toast.makeText(MainActivity.this, "Verification done", Toast.LENGTH_LONG).show();*/
                             customToast("Verification done");
-
+                            onVerificationDone(MobileNumber.getText().toString());
                             FirebaseUser user = task.getResult().getUser();
 
                                    /*Intent intent=new Intent(getApplicationContext(),Myjarbill.class);
@@ -372,9 +314,6 @@ public class VerifyOtpActivity extends AppCompatActivity implements TextWatcher 
                             startActivity(intent);*/
 
                             /* onBackPressed();*/
-
-
-
 
 
                             // ...
@@ -390,45 +329,6 @@ public class VerifyOtpActivity extends AppCompatActivity implements TextWatcher 
                     }
                 });
     }
-
-
-
-    //method for internet connectivity
-    public boolean isInternetOn() {
-
-
-        // get Connectivity Manager object to check connection
-        ConnectivityManager connec =
-                (ConnectivityManager) getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
-
-        // Check for network connections
-        if (connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
-                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
-                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
-                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
-
-            netConnectivity = "TRUE";
-
-            /*Toast.makeText(getApplicationContext(),"Connected",Toast.LENGTH_LONG).show();*/
-
-            return true;
-
-        } else if (
-                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
-                        connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
-
-            /*Toast.makeText(getApplicationContext(),"Disconnected",Toast.LENGTH_LONG).show();*/
-
-            netConnectivity = "FALSE";
-
-
-            return false;
-        }
-        return false;
-    }
-
-
-
 
 
 
@@ -464,17 +364,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements TextWatcher 
         toast.show();
     }
 
-    public  void  customsnackbaar(){
-        Snackbar snackbar=Snackbar.make(rl_number,"TOP SNACKBAR",Snackbar.LENGTH_LONG);
-        View view=snackbar.getView();
-        FrameLayout.LayoutParams params=(FrameLayout.LayoutParams)view.getLayoutParams();
-        params.gravity=Gravity.TOP;
-        view.setLayoutParams(params);
-        view.setBackgroundColor(Color.RED);
-        TextView textView=(TextView)(view).findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }
+
 
 
     @Override
@@ -546,6 +436,37 @@ public class VerifyOtpActivity extends AppCompatActivity implements TextWatcher 
         }
 
     }
+
+    public void onVerificationDone(String mobileNumber){
+        SharePrefUtil.setValue(getApplicationContext(),"mobile_number",mobileNumber);
+
+    }
+
+
+
+   /* //create new data
+    public  void  AddData(paymentPojo paumentList,String process,int i){
+        ArrayList<paymentPojo> sendData=new ArrayList<>();
+        sendData=paymentPojosList;
+        if(process.equalsIgnoreCase("ADD")){
+            sendData.add(paumentList);
+        }else if(process.equalsIgnoreCase("REMOVE")){
+            sendData.remove(paumentList);
+        }
+
+        Log.e("parameter:", "" + new Gson().toJson(sendData));
+        PaymentRequest paymentRequest=new PaymentRequest(mobileNUmber,new Gson().toJson(sendData));
+
+        if (TextUtils.isEmpty(userId)) {
+            userId = mFirebaseDatabase.push().getKey();
+        }
+
+        mFirebaseDatabase.child(userId).setValue(paymentRequest);
+
+        //check data availability
+        getKeydataValue(paymetRef,mobileNUmber);
+
+    }*/
 
 
 }

@@ -25,13 +25,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mtp.simplecoding.FirebaseDataBase.FireBaseDataActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Utility {
    public static Boolean paymentData=false;
    public static String mobileNUmber="0000000001";
-
+   public static final String TAG = FireBaseDataActivity.class.getSimpleName();
    public static long mStartRX = 0;
    public static long mStartTX = 0;
    public static long mLastTime = 0;

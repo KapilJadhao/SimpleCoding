@@ -1,130 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+    android:layout_margin="5dp"
+    android:layout_height="150dp">
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp">
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        android:layout_height="match_parent">
         <ImageView
-            android:layout_width="40dp"
-            android:id="@+id/iv_remove"
-            android:src="@drawable/ic_clear_black_24dp"
-            android:layout_height="40dp" />
+            android:id="@+id/iv_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY" />
 
-        <ImageView
-            android:layout_width="40dp"
-            android:id="@+id/iv_edit"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/iv_remove"
-            android:src="@drawable/ic_edit_black_24dp"
-            android:layout_height="40dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp">
+            <ImageView
+                android:layout_width="40dp"
+                android:id="@+id/iv_remove"
+                android:src="@drawable/ic_clear_black_24dp"
+                android:layout_height="40dp" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:id="@+id/iv_edit"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/iv_remove"
+                android:src="@drawable/ic_edit_black_24dp"
+                android:layout_height="40dp" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginEnd="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="80dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Description"
+                android:id="@+id/tv_description"
+                android:textStyle="bold"
+                android:textSize="@dimen/lebel_text_size"
+                android:textColor="@color/lebel_text_color"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Rs:"
+                    android:textSize="@dimen/lebel_text_size"
+                    android:textColor="@color/lebel_text_color"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Name"
+                    android:id="@+id/tv_amount"
+                    android:textSize="@dimen/lebel_text_size"
+                    android:textColor="@color/lebel_text_color"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Paid to:"
+                    android:textSize="@dimen/lebel_text_size"
+                    android:textColor="@color/lebel_text_color"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Name"
+                    android:id="@+id/tv_owner_name"
+                    android:textSize="@dimen/lebel_text_size"
+                    android:textColor="@color/lebel_text_color"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Duration:"
+
+                    android:textSize="@dimen/lebel_text_size"
+                    android:id="@+id/tv_duration"
+                    android:textColor="@color/lebel_text_color"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="3"
+                    android:textSize="@dimen/lebel_text_size"
+                    android:textColor="@color/lebel_text_color"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="Status:"
+                    android:textSize="@dimen/lebel_text_size"
+                    android:textColor="@color/lebel_text_color"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="paid"
+                    android:id="@+id/tv_status"
+                    android:textSize="@dimen/lebel_text_size"
+                    android:textColor="@color/lebel_text_color"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
     </RelativeLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_marginEnd="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="80dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Description"
-            android:id="@+id/tv_description"
-            android:textStyle="bold"
-            android:textSize="@dimen/lebel_text_size"
-            android:textColor="@color/lebel_text_color"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Rs:"
-                android:textSize="@dimen/lebel_text_size"
-                android:textColor="@color/lebel_text_color"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Name"
-                android:id="@+id/tv_amount"
-                android:textSize="@dimen/lebel_text_size"
-                android:textColor="@color/lebel_text_color"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Paid to:"
-                android:textSize="@dimen/lebel_text_size"
-                android:textColor="@color/lebel_text_color"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Name"
-                android:id="@+id/tv_owner_name"
-                android:textSize="@dimen/lebel_text_size"
-                android:textColor="@color/lebel_text_color"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Duration:"
-
-                android:textSize="@dimen/lebel_text_size"
-                android:id="@+id/tv_duration"
-                android:textColor="@color/lebel_text_color"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="3"
-                android:textSize="@dimen/lebel_text_size"
-                android:textColor="@color/lebel_text_color"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Status:"
-                android:textSize="@dimen/lebel_text_size"
-                android:textColor="@color/lebel_text_color"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="paid"
-                android:id="@+id/tv_status"
-                android:textSize="@dimen/lebel_text_size"
-                android:textColor="@color/lebel_text_color"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</android.support.v7.widget.CardView>

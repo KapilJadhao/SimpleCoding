@@ -8,7 +8,7 @@
     <color name="text_label">#434343</color>
 
     <color name="normal_text_color">#434343</color>
-    <color name="lebel_text_color">#434343</color>
+    <color name="lebel_text_color">#FFFFFF</color>
     <color name="theme_color">#434343</color>
     <color name="text_color_rgb_100_57_3">#5b3000</color>
     <color name="home_heder">#f7f7f7</color>
@@ -49,4 +49,5 @@
     <color name="btn_text">#ffffff</color>
     <color name="ordercon">#fa8814</color>
     <color name="edittext_notify">#979797</color>
+    <color name="activity_background">#424849</color>
 </resources>

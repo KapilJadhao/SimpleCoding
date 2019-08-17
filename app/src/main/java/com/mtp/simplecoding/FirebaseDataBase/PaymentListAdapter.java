@@ -1,7 +1,11 @@
 package com.mtp.simplecoding.FirebaseDataBase;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +13,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.mtp.simplecoding.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static com.mtp.simplecoding.RefranceName.BacgroundImage;
 
 public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.MessageViewHolder> {
     private List<paymentPojo> beanClassForCtagorysArrayList = new ArrayList<>();
@@ -58,6 +68,20 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
                 }
             }
         });
+        Glide.with(context)
+                .asBitmap()
+                .load(BacgroundImage)
+                .into(new CustomTarget<Bitmap>(){
+                    @Override
+                    public void onResourceReady( Bitmap resource,  Transition<? super Bitmap> transition) {
+                        messageViewHolder.iv_background.setImageBitmap(resource);
+                    }
+
+                    @Override
+                    public void onLoadCleared( Drawable placeholder) {
+
+                    }
+                });
 
     }
 
@@ -69,7 +93,7 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
 
 
         TextView tv_owner_name,tv_description,tv_duration,tv_status,tv_amount;
-        ImageView iv_remove;
+        ImageView iv_remove,iv_background;
 
 
 
@@ -77,12 +101,12 @@ public class PaymentListAdapter extends RecyclerView.Adapter<PaymentListAdapter.
             super(view);
 
             tv_owner_name=  view.findViewById(R.id.tv_owner_name);
-
             tv_description=  view.findViewById(R.id.tv_description);
             tv_duration=  view.findViewById(R.id.tv_duration);
             tv_status=  view.findViewById(R.id.tv_status);
             tv_amount=view.findViewById(R.id.tv_amount);
             iv_remove=view.findViewById(R.id.iv_remove);
+            iv_background=view.findViewById(R.id.iv_background);
 
 
         }

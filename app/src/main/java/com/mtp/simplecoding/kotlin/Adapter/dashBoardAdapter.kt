@@ -8,16 +8,18 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.mtp.simplecoding.FirebaseDataBase.paymentPojo
 
 import com.mtp.simplecoding.R
 import com.mtp.simplecoding.kotlin.pojo.DashBoardPojo
 import kotlinx.android.synthetic.main.dashboard_adapter.view.*
 
 
-class dashBoardAdapter(val items: ArrayList<DashBoardPojo>, val context: Context?) : RecyclerView.Adapter<ViewHolderDashBoard>() {
+class dashBoardAdapter(val items: ArrayList<DashBoardPojo>, val context: Context?,val mListener: ItemListener) : RecyclerView.Adapter<ViewHolderDashBoard>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolderDashBoard {
         return ViewHolderDashBoard(LayoutInflater.from(context).inflate(R.layout.dashboard_adapter, p0, false))
@@ -29,13 +31,15 @@ class dashBoardAdapter(val items: ArrayList<DashBoardPojo>, val context: Context
     }
 
     override fun onBindViewHolder(p0: ViewHolderDashBoard, p1: Int) {
+        val dashpojo: DashBoardPojo
+        dashpojo=items[p1]
         p0?.tvAnimalType?.text = items[p1].titleName
         p0?.tvCount?.text=items[p1].count
 
         if (context != null) {
             Glide.with(context)
                     .asBitmap()
-                    .load("https://firebasestorage.googleapis.com/v0/b/simplecoding-767e7.appspot.com/o/images%2Ftexture_image_2.jpg?alt=media&token=8b465907-7279-45dd-945e-8827d66ffcbc")
+                    .load(items[p1].imageName)
                     .into(object : CustomTarget<Bitmap>(){
                         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                             p0?.ivBackground.setImageBitmap(resource)
@@ -50,8 +54,22 @@ class dashBoardAdapter(val items: ArrayList<DashBoardPojo>, val context: Context
                     })
         }
 
+        p0?.ivBackground.setOnClickListener {
+           /* val i = Intent(this@MainActivity, SecondActivity::class.java)
+            startActivity(i)
+            finish()*/
+            if (mListener != null) {
+                mListener.onItemClick(dashpojo)
+            }
+            //Toast.makeText(context, "You clicked me.", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
+
+    public interface ItemListener {
+        fun onItemClick(item: DashBoardPojo)
+    }
 
 
 }

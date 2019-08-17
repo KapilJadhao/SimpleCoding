@@ -148,25 +148,6 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
         });
     }
 
-    public void paymentData() {
-
-
-        String [] Amount={"100","200","1500","222"};
-        String [] fromDate={"10-05-19","15-05-19","22-05","23-22-30"};
-        String [] toDate={"10-05-19","15-05-19","22-05","11-11-11"};
-        String [] reminder={"true","false","true","false"};
-        String [] Status={"paid","paid","pending","paid"};
-        String [] nameOfOwner={"akash","kapil","akshay","kishor"};
-        String [] description={"akash","kapil","akshay","kishor"};
-        for (int i = 0; i < nameOfOwner.length; i++) {
-            paymentPojo paumentList = new paymentPojo(Amount[i],fromDate[i],toDate[i],reminder[i],Status[i],nameOfOwner[i],description[i]);
-            paymentPojosList.add(paumentList);
-
-        }
-
-        setRecylerView();
-    }
-
 
     public  void  setRecylerView(){
         paymentListAdapter = new PaymentListAdapter(paymentPojosList,getActivity(),this);

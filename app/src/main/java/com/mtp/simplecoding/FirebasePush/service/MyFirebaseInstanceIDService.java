@@ -8,6 +8,7 @@ import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.mtp.simplecoding.FirebasePush.app.Config;
+import com.mtp.simplecoding.SharePrefUtil;
 
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
@@ -40,6 +41,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("regId", token);
         editor.commit();
+        SharePrefUtil.setValue(getApplicationContext(),"firebase_id",token);
     }
 }
 

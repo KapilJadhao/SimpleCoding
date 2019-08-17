@@ -3,6 +3,7 @@ package com.mtp.simplecoding.kotlin.Activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.mtp.simplecoding.R
+import com.mtp.simplecoding.SharePrefUtil
 import com.mtp.simplecoding.kotlin.fragment.DashBoaedViewFragment
 
 class DashBoaedView : AppCompatActivity() {
@@ -15,6 +16,9 @@ class DashBoaedView : AppCompatActivity() {
                     .replace(R.id.container, DashBoaedViewFragment.newInstance())
                     .commitNow()
         }
+
+        println("mobile_number "+SharePrefUtil.getValue(this,"mobile_number"))
+        println("firebase_key "+SharePrefUtil.getValue(this,"firebase_id"))
     }
 
 }

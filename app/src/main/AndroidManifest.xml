@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".kotlin.Activity.DashBoaedView"></activity>
+        <activity android:name=".kotlin.Activity.Profile"></activity>
+        <activity android:name=".kotlin.Activity.DashBoaedView" />
         <activity android:name=".kotlin.Activity.PaymentActvity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".FirebaseDataBase.PaymentListActivity" />
