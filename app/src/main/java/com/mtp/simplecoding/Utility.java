@@ -31,8 +31,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Utility {
+
+   public static SharedPreferenceHelper userPreference,appPreference;
    public static Boolean paymentData=false;
-   public static String mobileNUmber="0000000001";
+   public static String mobileNUmber="0000000002";
    public static final String TAG = FireBaseDataActivity.class.getSimpleName();
    public static long mStartRX = 0;
    public static long mStartTX = 0;

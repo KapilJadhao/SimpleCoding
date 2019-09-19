@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -64,18 +65,20 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
     private LinearLayoutManager linearLayoutManager;
     ArrayList<paymentPojo> paymentPojosList=new ArrayList<>();
 
-    Button btn_add_payment;
+    ImageView btn_add_payment;
     private static final String TAG = FireBaseDataActivity.class.getSimpleName();
 
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
+    TextView tv_total;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         getActivity().invalidateOptionsMenu();
         final View rootView=inflater.inflate(R.layout.payment_list_fragment, container, false);
         rv_paymenyList=rootView.findViewById(R.id.rv_excavation_list);
+        tv_total=rootView.findViewById(R.id.tv_total);
 
         /* search_list.addTextChangedListener(new TextWatcher() {
 
@@ -155,7 +158,18 @@ public class PaymentListFragment extends Fragment implements PaymentListAdapter.
         rv_paymenyList.setLayoutManager(linearLayoutManager);
         rv_paymenyList.setAdapter(paymentListAdapter);
         rv_paymenyList.setNestedScrollingEnabled(false);
+        calculateTotal(paymentPojosList);
 
+    }
+    public void calculateTotal(ArrayList<paymentPojo> paymentPojo){
+
+        float totalValue= (float) 0.0;
+        String totalString="";
+        for(int i=0;i<paymentPojo.size();i++){
+            totalValue= totalValue+Float.parseFloat(paymentPojo.get(i).getAmount());
+        }
+        totalString= String.valueOf(totalValue);
+        tv_total.setText("Total:"+totalString);
     }
 
     @Override

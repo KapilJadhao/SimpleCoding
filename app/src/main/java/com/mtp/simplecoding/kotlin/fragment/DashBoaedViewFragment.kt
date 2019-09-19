@@ -22,6 +22,7 @@ import com.mtp.simplecoding.Utility
 import com.mtp.simplecoding.Utility.TAG
 import com.mtp.simplecoding.Utility.mobileNUmber
 import com.mtp.simplecoding.kotlin.Activity.Profile
+import com.mtp.simplecoding.kotlin.Activity.WorkManegment
 import com.mtp.simplecoding.kotlin.Adapter.dashBoardAdapter
 import com.mtp.simplecoding.kotlin.pojo.DashBoardPojo
 import com.mtp.simplecoding.kotlin.pojo.DashBoardRequestPojo
@@ -138,6 +139,8 @@ class DashBoaedViewFragment : Fragment(), dashBoardAdapter.ItemListener {
             context?.startActivity(intent)
 
         }else if(item.titleName.equals("Stories")){
+            val intent = Intent(context, WorkManegment::class.java)
+            context?.startActivity(intent)
 
         }else if(item.titleName.equals("Contacts")){
 
@@ -169,7 +172,7 @@ class DashBoaedViewFragment : Fragment(), dashBoardAdapter.ItemListener {
 
                 Log.e(TAG, "App title updated")
                 //setDashBoardDataToFB(Gson().toJson(dataSet))
-                getKeydataValue(dashBoardRef, mobileNUmber,progressDialog)
+                getKeydataValue(dashBoardRef, "0000000001",progressDialog)
 
             }
         })

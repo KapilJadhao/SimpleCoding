@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_date"
+            android:layout_marginTop="10dp"
+            android:text="Select Date"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <EditText
+
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/ev_reason"
+            android:hint="Enter Reason"
+            android:textColor="@color/text_label"
+            android:layout_height="50dp" />
+        <RelativeLayout
+            android:layout_below="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+
+            android:layout_height="wrap_content">
+            <Spinner
+                android:id="@+id/sp_is_d"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Spinner>
+
+            <TextView
+
+                android:id="@+id/sp_text_is_d"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+
+            android:layout_height="wrap_content">
+            <Spinner
+                android:id="@+id/sp_is_w"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Spinner>
+
+            <TextView
+
+                android:id="@+id/sp_text_is_w"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:id="@+id/btn_submit"
+            android:text="Submit"
+            android:layout_height="50dp"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
